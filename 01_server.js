@@ -13,9 +13,10 @@ const http = require('http')
 
 // 创建简单的服务
 const serve = http.createServer((request, response) => {
-  console.log(request);
-  response.write('111');
-  response.end();
+  // request.setHeader('Content-Type','text/plain');
+  // console.log(request);
+  // response.write('111');
+  response.end('Hello world\n');
 });
 serve.listen(8090, 'localhost', (err, data) => {
   console.log('服务创建成功')
