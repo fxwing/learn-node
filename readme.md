@@ -27,5 +27,45 @@
     ```
     - 在`package.json`当前文件中访问的需要`echo $npm_package_customVar_name`但是只在bash中生效
     - cross-env 设置环境变量`cross-env NODE_ENV=production npm run runjs`
-
-
+9. npx
+    <strong>作用</strong>
+    先在本地查找没有 去全局
+    1. npx机制是在终端调用项目内部安装的模块 `node_modules/.bin/`文件下
+    2. 可以避免全局安装模块
+    3. `npx --no-install http-serve` 不安装使用本地模块  只能使用本地或者全局的 没有花报错
+    4. `npx --ignore-existing http-server` 忽略已经存在的模块   使用线上最新的
+10. commonjs模块导出和引入 浏览器不支持
+    1. `module.exports ={}` 页面只能有一个 `exports.say = say`
+    2. 引入 `const a = require('')`
+11. commonjs和ES6 module 区别
+    ```js
+    //  可以写在判断里面  es6 module 不可以只能在顶部
+    if (true) {
+        const { name, obj } = require('./name')
+        console.log(name);
+        obj.key = 2
+        console.log(obj)
+    }
+    ```
+    为值的拷贝 修改数据 当前不会影响
+    ```js
+    // name.js
+        let name = 'name'
+        // console.log('name.js');
+        exports.name = name;
+        exports.changeName=function() {
+        name = 'name1'
+        }
+    ```
+    ```js
+    //app.js
+    //  可以写在判断里面  es6 module 不可以只能在顶部
+    if (true) {
+        const { name,changeName } = require('./name.js')
+        console.log(name); // name
+        changeName()
+        console.log(name) //name
+    }
+    // this 指向当前模块
+    console.log(this); // {}
+    ```
