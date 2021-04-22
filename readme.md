@@ -38,8 +38,9 @@
     1. `module.exports ={}` 页面只能有一个 `exports.say = say`
     2. 引入 `const a = require('')`
 11. commonjs和ES6 module 区别
+    - commonjs 引入和导出都可以写在判断里面,es6 module不可以
+    - commonjs 修改导出模块的数据,不影响当前模块，es6 module 会影响
     ```js
-    //  可以写在判断里面  es6 module 不可以只能在顶部
     if (true) {
         const { name, obj } = require('./name')
         console.log(name);
@@ -47,19 +48,19 @@
         console.log(obj)
     }
     ```
-    为值的拷贝 修改数据 当前不会影响
+    1. commonjs
     ```js
+    // 为值的拷贝 修改数据 当前不会影响
     // name.js
         let name = 'name'
         // console.log('name.js');
         exports.name = name;
         exports.changeName=function() {
-        name = 'name1'
+            name = 'name1'
         }
     ```
     ```js
     //app.js
-    //  可以写在判断里面  es6 module 不可以只能在顶部
     if (true) {
         const { name,changeName } = require('./name.js')
         console.log(name); // name
@@ -69,3 +70,20 @@
     // this 指向当前模块
     console.log(this); // {}
     ```
+    1. es6 module
+        ```ts
+        // app.ts
+        import changeName, {name} from './test_module'
+        console.log(name);// name
+        changeName();
+        console.log(name); // name1
+        ```
+        ```ts
+        //test_module.js
+        export let name: string = 'name';
+        export default function changeName() {
+            name = 'name1';
+        }
+        ```
+
+
