@@ -85,5 +85,44 @@
             name = 'name1';
         }
         ```
-
-
+12. ### node常用的内置模块
+   -  #### url
+    - parse 将url字符串转化为url对象
+    - format 将url对象转化为字符串
+    -  ```json
+        // url 对象
+        {
+            protocol: "https:",
+            slashes: true,
+            auth: null,
+            host: "www.baidu.com:443",
+            port: "443",
+            hostname: "www.baidu.com",
+            hash: "#tag=3",
+            search: "?id=2",
+            query: "id=2",
+            pathname: "/path/index.html",
+            path: "/path/index.html?id=2",
+            href: "https://www.baidu.com:443/path/index.html?id=2",
+        }; ```
+    - resolve  拼接字符串
+    -  ```js
+        //logger.debug(url.resolve("https://www.baidu.com:443/path",'/index.html'));
+        // https://www.baidu.com:443/index.html
+        //logger.debug(url.resolve("https://www.baidu.com:443/path/",'index.html'));
+        // https://www.baidu.com:443/path/index.html
+        // logger.debug(3,url.resolve("https://www.baidu.com:443/path/",'./index.html'));
+        // 'https://www.baidu.com:443/path/index.html'
+        // logger.debug(3,url.resolve("https://www.baidu.com:443/path",'index.html'));
+        //'https://www.baidu.com:443/index.html'
+        ```
+    -  URL对象和URLSearchParmas
+        ```js
+            // const  urlIns = new URL('https://www.baidu.com:443/path/index.html?id=2&tag=3')
+            // const  searchParams = urlIns.searchParams;
+            // logger.debug(searchParams.get('tag')); // 3
+            // ?id=2&tag=3  url的search对象
+            const urlIns = new url.URLSearchParams("?id=2&tag=3");
+            logger.debug(111,urlIns.get("tag")); // 3
+            ```
+    - #### http
